@@ -92,7 +92,7 @@ def main() -> None:
               "Every named four-factor combination is represented once in the physical design. Outcome completeness is assessed separately, so an analytical NA cannot masquerade as an absent experiment.", "",
               f"- Design coverage: **{actual_combinations / expected:.1%}**", f"- Outcome coverage: **{len(observed) / expected:.1%}**", "",
               "## Single-factor perturbation pairs", "",
-              "Pairs were enumerated before any cliff label or threshold. Both endpoints must have observed yields; all four named factors are compared exactly, and only `n_changed_factors = 1` is retained.", "",
+              "Pairs were enumerated before any cliff label or threshold. Both endpoints must have observed yields and the same `reaction_group_id`; exactly one of `catalyst_system`, `base`, and `additive` may differ.", "",
               to_md_table(pair_counts), "", "### Absolute Δyield distribution (percentage points)", "", to_md_table(delta_quantiles), "",
               "No cliff threshold is set in this report. The quantiles are descriptive inputs for a pre-registered threshold decision, not a post hoc sample-selection rule.", ""]
     REPORT.write_text("\n".join(lines))

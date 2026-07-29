@@ -115,6 +115,10 @@ def main() -> None:
     merged = layout.merge(wells, how="left", on=["plate", "row", "col"], validate="one_to_one")
     merged["is_control"] = merged[["additive", "aryl_halide"]].isna().any(axis=1)
     merged["record_class"] = merged["is_control"].map({False: "main_matrix", True: "control"})
+    merged["control_type"] = pd.NA
+    merged.loc[merged["additive"].isna() & merged["aryl_halide"].notna(), "control_type"] = "additive_free_control"
+    merged.loc[merged["additive"].notna() & merged["aryl_halide"].isna(), "control_type"] = "aryl_halide_free_control"
+    merged.loc[merged["additive"].isna() & merged["aryl_halide"].isna(), "control_type"] = "blank_control"
     merged["yield_percent"] = pd.to_numeric(merged["product_scaled"], errors="coerce")
     merged["yield_observed"] = merged["yield_percent"].notna()
     merged["zero_yield"] = merged["yield_percent"].eq(0) & merged["yield_observed"]
@@ -138,7 +142,7 @@ def main() -> None:
     processed = out / "data" / "processed"
     meta = out / "data" / "raw_metadata"
     processed.mkdir(parents=True, exist_ok=True); meta.mkdir(parents=True, exist_ok=True)
-    keep = ["reaction_id", "reaction_group_id", "record_class", "is_control", "plate", "block", "row", "col",
+    keep = ["reaction_id", "reaction_group_id", "record_class", "is_control", "control_type", "plate", "block", "row", "col",
             "source_file", "source_well", "Sample Name", "Data File", "aryl_halide_number", "aryl_halide",
             "aryl_halide_smiles", "catalyst_system", "ligand", "ligand_smiles", "base", "base_smiles", "additive_number", "additive",
             "additive_smiles", "yield_percent", "yield_observed", "zero_yield", "product", "internal_standard", "corr_factor"]

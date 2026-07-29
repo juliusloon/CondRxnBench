@@ -83,7 +83,7 @@ Every named four-factor combination is represented once in the physical design. 
 
 ## Single-factor perturbation pairs
 
-Pairs were enumerated before any cliff label or threshold. Both endpoints must have observed yields; all four named factors are compared exactly, and only `n_changed_factors = 1` is retained.
+Pairs were enumerated before any cliff label or threshold. Both endpoints must have observed yields and the same `reaction_group_id`; exactly one of `catalyst_system`, `base`, and `additive` may differ.
 
 | changed_factor   |   pairs |
 |:-----------------|--------:|
