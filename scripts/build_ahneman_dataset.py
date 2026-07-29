@@ -106,7 +106,9 @@ def build_layout(root: Path) -> tuple[pd.DataFrame, list[Path]]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--source-root", type=Path, required=True)
+    parser.add_argument("--source-root", type=Path,
+                        default=Path("data/raw/ahneman_doyle_rxnpredict"),
+                        help="versioned raw rxnpredict subset (default: %(default)s)")
     parser.add_argument("--out-root", type=Path, default=Path("."))
     args = parser.parse_args()
     root, out = args.source_root.resolve(), args.out_root.resolve()
