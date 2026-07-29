@@ -1,0 +1,25 @@
+{
+  "theoretical_main_cells": 4140,
+  "reconstructed_main_cells": 4140,
+  "unique_condition_combinations": 4140,
+  "duplicate_condition_combinations": 0,
+  "missing_analytical_outcomes": 8,
+  "observed_outcomes": 4132,
+  "zero_yield_count": 273,
+  "zero_yield_rate_observed": 0.06606969990319458,
+  "single_factor_pairs_observed_only": 55676,
+  "pair_counts": [
+    {
+      "changed_factor": "additive",
+      "pairs": 45365
+    },
+    {
+      "changed_factor": "catalyst_system",
+      "pairs": 6187
+    },
+    {
+      "changed_factor": "base",
+      "pairs": 4124
+    }
+  ]
+}

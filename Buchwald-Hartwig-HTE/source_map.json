@@ -1,0 +1,244 @@
+{
+  "paper": {
+    "title": "Predicting reaction performance in C-N cross-coupling using machine learning",
+    "venue": "Science",
+    "year": 2018,
+    "source_type": "html",
+    "language": "en",
+    "source_path": "/Users/juliusloon/Documents/Files/data/CondRxnBench/Buchwald-Hartwig-HTE/Buchwald-Hartwig-HTE.html",
+    "reader_status": "draft"
+  },
+  "blocks": [
+    {
+      "id": "S001",
+      "page": 1,
+      "type": "paragraph",
+      "order": 1,
+      "section": "Front matter summary",
+      "function": "problem_setup",
+      "original_text": "We selected the Pd-catalyzed Buchwald-Hartwig reaction as our test reaction for model development due to its broad value in pharmaceutical synthesis (Fig. 1A) (25). Nevertheless, the application of this reaction to complex drug-like molecules remains challenging (26). One limitation is the poor performance of substrates possessing 5-membered heterocycles that contain heteroatom-heteroatom bonds, such as isoxazoles. These heterocycles have drug-like characteristics but are underrepresented in successful drug candidates (27). Thus, we sought to use ML to predict the performance of the Buchwald-Hartwig reaction in the presence of isoxazoles. Rather than evaluate the coupling of a collection of substrates directly bearing the heterocycle functionality, we pursued a Glorius fragment additive screening approach (28) wherein the impact of isoxazole fragment additives was evaluated on the amination of different aryl and heteroaryl halides. This method cannot always account for the full impact of a structural motif embedded within a substrate. However, the Glorius approach allowed us to test 345 diverse structural interactions between isoxazoles and aryl and heteroaryl halides. This large array would not be possible using whole molecules due to the necessity to synthesize and isolate all possible products for quantification in this study. We conducted the coupling reactions using the ultra-high-throughput setup recently developed in the Merck Research Laboratories for nanomole-scale experimentation in 1536-well plates (16). Use of the Mosquito robot enabled simultaneous evaluation of more reaction dimensions than previously examined using classical statistical analysis. Three 1536-well plates consisting of a full matrix of 15 aryl and heteroaryl halides, 4 Buchwald ligands, 3 bases, and 23 isoxazole additives gave a total of 4608 reactions (including controls). The yields of these reactions were used as the model output. Approximately 30% of the reactions failed to deliver any product, with the remainder quite evenly spread over the range of yields (fig. S7).",
+      "translation": "作者选择 Pd 催化 Buchwald-Hartwig 反应作为测试体系，并用 Glorius 片段添加剂筛选策略构建 4608 个 HTE 反应数据点，用于预测异噁唑存在下的产率表现。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S001"
+    },
+    {
+      "id": "S002",
+      "page": 1,
+      "type": "paragraph",
+      "order": 2,
+      "section": "Abstract",
+      "function": "contribution",
+      "original_text": "Machine learning methods are becoming integral to scientific inquiry in numerous disciplines. Here we demonstrate that machine learning can be used to predict the performance of a synthetic reaction in multidimensional chemical space using data obtained via high-throughput experimentation. We created scripts to compute and extract atomic, molecular, and vibrational descriptors for the components of a palladium-catalyzed Buchwald-Hartwig cross-coupling of aryl halides with 4-methylaniline in the presence of various potentially inhibitory additives. Using these descriptors as inputs and reaction yield as output, we show that a random forest algorithm provides significantly improved predictive performance over linear regression analysis. The random forest model was also successfully applied to sparse training sets and out-of-sample prediction, suggesting its value in facilitating adoption of synthetic methodology.",
+      "translation": "摘要核心贡献是：作者将 HTE 数据和自动提取的描述符输入随机森林模型，实现了多维化学空间中的产率预测，并展示了稀疏训练与样本外预测能力。",
+      "confidence": "medium",
+      "refs": [],
+      "insert_after": "S002"
+    },
+    {
+      "id": "S003",
+      "page": 1,
+      "type": "paragraph",
+      "order": 3,
+      "section": "Introduction",
+      "function": "background_gap",
+      "original_text": "Machine learning is the study and construction of computer algorithms that can learn from data (1). The ability of these algorithms to detect meaningful patterns has led to their adoption across a wide range of applications in science and technology, from autonomous vehicle control to recommender systems (2). Machine learning has also been successfully applied in the biomedical sciences to enhance the virtual screening of libraries of drug-like molecules for biological function (3-5). However, its application to the chemical sciences, and synthetic organic chemistry in particular, has been limited (6, 7). Prior efforts have primarily focused on using machine learning to assist with synthetic planning via retrosynthetic pathways or to predict the product(s) of chemical reactions given a set of reactants and conditions (8-11). Applications of machine learning to predict the performance of a given reaction, however, are rare. Studies in the area of heterogeneous catalysis have used machine learning to predict reaction performance when only a single component is varied (12, 13). Two recent studies have advanced the field by evaluating predictions in multidimensional chemical space, although these perform a binary classification of reaction success (14, 15). Using regression-based machine learning to predict reaction yields in multidimensional chemical space could provide chemists with a powerful tool to navigate the adoption of synthetic methodology.",
+      "translation": "作者指出合成化学里机器学习多数仍停留在逆合成或产物分类层面，而在多维化学空间直接做产率回归预测仍然罕见。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S003"
+    },
+    {
+      "id": "S004",
+      "page": 1,
+      "type": "paragraph",
+      "order": 4,
+      "section": "Introduction",
+      "function": "motivation",
+      "original_text": "There are many challenges in applying machine learning (ML) to reaction performance that have previously hindered its use in the field of chemical synthesis. Implementation of these algorithms has historically been challenging for nonspecialists. Further, the amount of data required to obtain statistically meaningful results grows exponentially with the number of dimensions under study, a problem known as the \"curse of dimensionality\" (1). Given the multidimensionality of chemical structure and reactivity, it has been difficult to generate enough data or access sufficiently complete and consistent data from databases to warrant implementation of these algorithms (14). Fortunately, over the last decade, high-throughput experimentation (HTE) has emerged as a powerful tool in industry and academia for reaction optimization and discovery (16, 17). We sought to evaluate whether ML could be applied to the scale of data available to modern HTE and enable yield prediction in multidimensional chemical space.",
+      "translation": "这一段解释了为什么 HTE 的出现让产率预测第一次变得现实：它缓解了多维反应空间的数据稀缺问题。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S004"
+    },
+    {
+      "id": "S005",
+      "page": 1,
+      "type": "paragraph",
+      "order": 5,
+      "section": "Introduction",
+      "function": "baseline",
+      "original_text": "Linear regression is the traditional tool for reaction prediction and analysis in both industry and academia (18). In this approach, the user assumes a linear relationship between reaction input (e.g., catalyst descriptors) and output (e.g., product selectivity), and hand-selects input variables based on specific mechanistic hypotheses (19, 20). A strength of linear regression is its interpretability: a good fit between reagent descriptors and output supports mechanistic inferences, such as in the seminal Hammett linear free-energy relationship (21).",
+      "translation": "作者将线性回归设置为可解释但受机理假设约束的传统基线。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S005"
+    },
+    {
+      "id": "S006",
+      "page": 1,
+      "type": "paragraph",
+      "order": 6,
+      "section": "Introduction",
+      "function": "baseline_limit",
+      "original_text": "The models obtained from linear regression analysis have also been used for prediction. Recently, Sigman and co-workers have applied multivariate linear and polynomial regression analysis to optimize reaction selectivity by predicting catalyst, ligand, and substrate effects (22-24). Predicting yield tends to be more difficult; whereas product selectivity is determined by a small number of elementary steps, many on- and off-cycle events can dramatically alter reaction yield.",
+      "translation": "作者强调产率比选择性更难预测，因为其受更多循环内外过程共同影响。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S006"
+    },
+    {
+      "id": "S007",
+      "page": 1,
+      "type": "paragraph",
+      "order": 7,
+      "section": "Introduction",
+      "function": "contribution",
+      "original_text": "Machine learning approaches accept numerous input descriptors without recourse to a mechanistic hypothesis and evaluate functions with greater flexibility to match patterns in data. As such, we postulated that ML might outperform regression analysis for yield prediction and circumvent the challenge of selecting mechanistically relevant descriptors for large and multidimensional datasets. Here, we report that a random forest ML model trained on multidimensional chemical data can be used to predict the performance of a Buchwald-Hartwig amination reaction conducted in the presence of potentially inhibitory additives and to infer underlying reactivity. We have taken steps to automate reaction parameterization and modeling with the aim of making this tool accessible to the synthetic community.",
+      "translation": "核心主张是：随机森林能在无需强机理先验的情况下更好地做产率预测，并支持后续反应性解释。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S007"
+    },
+    {
+      "id": "S008",
+      "page": 1,
+      "type": "paragraph",
+      "order": 8,
+      "section": "Results",
+      "function": "descriptor_engineering",
+      "original_text": "Next we turned to the selection of appropriate descriptors. In linear regression analysis, this is typically done by hand according to a mechanistic hypothesis, with principal component analysis sometimes being used to reduce the parameter set to an uncorrelated and statistically tractable number (29). For the ML model, we sought a set of descriptors that adequately characterizes the differences among the reactions without recourse to a specific hypothesis. For reasons of internal consistency and descriptor availability, calculated properties were used. To avoid prohibitively time-consuming analysis and logging of computational data, software was written to submit molecular, atomic, and vibrational property calculations to Spartan and subsequently extract these features from the resulting text files for accessibility to a general user (Fig. 1B). The program only requires input of reagent structures in the Spartan GUI and specification of the reaction components in a Python script; as such it is applicable to any reaction type. The program then generates the data table that can be used for modeling. In total, 120 descriptors were extracted by the software to characterize each reaction (Supplementary Section III).",
+      "translation": "作者将计算化学特征工程自动化，最终为每个反应抽取 120 个描述符。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S008"
+    },
+    {
+      "id": "S009",
+      "page": 1,
+      "type": "paragraph",
+      "order": 9,
+      "section": "Results",
+      "function": "main_result",
+      "original_text": "With these data in hand, the predictive accuracy of linear regression and an array of ML methods were evaluated using 70% of the data as a training set to predict the remaining 30% (test set) (Fig. 2A). For the linear regression models, dimension reduction by removing correlated descriptors as well as various regularization methods (e.g., LASSO, Ridge, and Elastic Net) were evaluated, but none generated good predictive performance. Turning to supervised ML models, k-nearest neighbors (kNN), support vector machines (SVM), and Bayes generalized linear model (GLM) provided no improvement over a linear regression model. A single-layer neural network was also evaluated, but gave no improvement. By contrast, the random forest algorithm was found to provide significant improvements over linear regression analysis and other ML methods in terms of predictive accuracy. The test set root mean squared error (RMSE) for the random forest model is 7.8% with an R² value of 0.96. A significant proportion of this variation is likely attributable to experimental and analytical error. Random forest algorithms operate by randomly sampling the data and constructing decision trees, which are then aggregated to generate an overall prediction (30). By combining a large number of low-precision models, the algorithm can deliver high predictive accuracy without succumbing to overfitting.",
+      "translation": "主要定量结果是：随机森林显著优于线性回归、kNN、SVM、GLM 和单层神经网络，测试集 RMSE 为 7.8%，R² 为 0.96。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S009"
+    },
+    {
+      "id": "S010",
+      "page": 1,
+      "type": "paragraph",
+      "order": 10,
+      "section": "Results",
+      "function": "sparse_generalization",
+      "original_text": "Nevertheless, ML tends to experience predictive limitations when significantly different reaction conditions are used in the test set. This problem is exacerbated by the presence of activity cliffs, which are areas in reaction space where modest changes in chemical structure can lead to dramatic changes in reaction outcome (31). The tendency of ML algorithms to overfit and the presence of activity cliffs conspire to necessitate the collection of local reaction data (see fig. S30 for prediction of ArI/ArCl reaction outcomes from ArBr training data). One method for maximizing the extrapolative ability of a model is to use training data spread across the chemical space of interest. The ability to perform accurate prediction under sparsity effectively increases the reaction space that can be explored using the same number of experiments. For the random forest model, we were surprised to discover that enhanced predictive power over other methods could be achieved using a significantly smaller subset of the training data (Fig. 2B). Specifically, the random forest algorithm trained on only 5% of the reaction data outperformed any other regression technique using 70% of the same reaction data. Because 5% of the dataset is only 230 experiments, these results indicate that ML can offer improvements in prediction on a scale routinely pursued in the course of reaction optimization and scope elucidation.",
+      "translation": "随机森林在稀疏训练下仍然表现突出，但作者也明确讨论了 activity cliffs 和外推边界。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S010"
+    },
+    {
+      "id": "S011",
+      "page": 1,
+      "type": "paragraph",
+      "order": 11,
+      "section": "Results",
+      "function": "out_of_sample",
+      "original_text": "The ability of a random forest model to predict outcomes for reactions containing additives not included in its training data was next explored. If effective out-of-sample prediction were possible, ML could predict the impact of a new isoxazole or aryl halide structure on the outcome of a Buchwald-Hartwig amination and identify the combination of base and ligand that delivers highest yield. To this end, we evaluated whether the results of 15 additives could be used to predict the outcomes with 8 distinct additives (Fig. 3A). On average, the out-of-sample RMSE was 11.3% with an R2 value of 0.91 (Fig. 3B). Surprisingly, none of the additives experienced significant systematic deviations from what was predicted by the model. The high predictive ability of the model suggests that the effects of these substituents on reaction outcome were captured well by the descriptors. However, since additive consumption was not included in the output, the algorithm is likely to experience predictive limitations when applied to substrates with embedded isoxazoles.",
+      "translation": "模型对未见过添加剂的样本外预测平均 RMSE 为 11.3%，R² 为 0.91，但嵌入式异噁唑底物仍可能超出其表征边界。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S011"
+    },
+    {
+      "id": "S012",
+      "page": 1,
+      "type": "paragraph",
+      "order": 12,
+      "section": "Results",
+      "function": "mechanistic_hypothesis",
+      "original_text": "Having obtained a predictive model, we sought to determine whether it could be used to guide mechanistic analysis. Unlike a linear regression model, the random forest model is challenging to interpret directly. We therefore evaluated the relative importance of descriptors used to construct the model. One such measure of a descriptor's importance is the percent increase in the model's mean squared error (MSE) when values for that descriptor are randomly shuffled and the model is retrained (1). When applied to the cross-coupling reaction, we found that four of the five most important descriptors in predicting reaction outcomes were the additive's *C3 NMR shift, LUMO energy, and *O1 and *C5 electrostatic charge (Fig. 4A). Notably, these features are not sufficient to obtain a predictive linear model (see fig. S24). The descriptors taken together suggest that the propensity of the additive to act as an electrophile influences reaction outcomes (32-34). As such, we hypothesized that competitive oxidative addition of the isoxazole could be a source of deleterious side reactivity. Although oxidative addition of Pd to isoxazoles is not known (35), such an elementary step has been reported previously for other transition metals (36).",
+      "translation": "描述符重要性分析把黑箱预测转化成机理线索：异噁唑的亲电性可能通过竞争性氧化加成损害产率。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S012"
+    },
+    {
+      "id": "S013",
+      "page": 1,
+      "type": "paragraph",
+      "order": 13,
+      "section": "Results",
+      "function": "mechanistic_validation",
+      "original_text": "To evaluate this proposal, we conducted a series of experiments with isoxazoles Ia and Ib, which possess the smallest and largest predicted *C3 NMR chemical shifts of the additives in the test set, respectively (Fig. 4B). As shown in Fig. 4C, spectrum 1, isoxazole Ia underwent no reaction with tetrakis(triphenylphosphine) Pd(0) in benzene at room temperature. On the other hand, with isoxazole Ib, a new species was observed within one hour (Fig. 4C, spectrum 2). High-resolution mass spectrometry (HRMS) and spectroscopic (31P, 13C, and 1H NMR) analysis provides strong evidence that isoxazole Ib underwent oxidative addition at the N-O bond (Supplementary Section VI). Going further, we investigated how isoxazoles Ia and Ib performed in competition with an aryl halide. When Ia was mixed with aryl bromide 1c, only formation of the aryl bromide oxidative adduct (2c) was observed (Fig. 4C, spectrum 3). However, when isoxazole Ib was subjected to the same competition experiment, the oxidative adducts of both the aryl bromide 1c and isoxazole Ib were observed in roughly equal amounts (Fig. 4C, spectrum 4). These data are consistent with the hypothesis that electrophilic isoxazole additives can undergo N-O oxidative addition to Pd(0) as a deleterious side reaction, causing diminished yields of the desired Buchwald-Hartwig aminations. While such a hypothesis could have been obtained by alternate means, this study highlights how measuring the influence of a large collection of descriptors for their predictive ability in a ML algorithm can be used to generate hypotheses for further mechanistic inquiry. Although one should be hesitant to perform direct causal inference, this approach could be particularly enabling for larger and higher dimensional datasets wherein it would be challenging or impossible to intuit a unified mechanism.",
+      "translation": "机理验证实验支持了 N-O 氧化加成副反应假说，也说明描述符重要性可以作为后续实验设计的启发。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S013"
+    },
+    {
+      "id": "S014",
+      "page": 1,
+      "type": "paragraph",
+      "order": 14,
+      "section": "Conclusion",
+      "function": "significance",
+      "original_text": "Vast resources and time are currently expended on the development of synthetic methods and their application to complex molecule synthesis, often in a largely ad hoc manner. Here we show that simple atomic, molecular, and vibrational descriptors that can be automatically extracted from the text files of Spartan calculations can be used as input for a random forest model to predict yields of multidimensional chemical data. Coupled with advances in high-throughput experimentation and analysis with whole-molecule systems, we expect that this approach will prove of broad utility in facilitating the adoption of synthetic methods by enabling prediction of a new substrate's performance under given conditions or prediction of the optimal conditions for a new substrate.",
+      "translation": "结论是：自动提取的计算描述符配合 HTE 和随机森林，可以成为预测新底物表现与筛选最优条件的实用工具。",
+      "confidence": "high",
+      "refs": [],
+      "insert_after": "S014"
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "block_ids": [
+        "S001",
+        "S002",
+        "S003",
+        "S004",
+        "S005",
+        "S006",
+        "S007",
+        "S008",
+        "S009",
+        "S010",
+        "S011",
+        "S012",
+        "S013",
+        "S014"
+      ]
+    }
+  ],
+  "figures": [],
+  "glossary": [
+    {
+      "term": "high-throughput experimentation (HTE)",
+      "translation": "高通量实验",
+      "note": "用于大规模产率数据采集"
+    },
+    {
+      "term": "random forest",
+      "translation": "随机森林",
+      "note": "文中最优模型"
+    },
+    {
+      "term": "descriptor",
+      "translation": "描述符",
+      "note": "包括原子、分子、振动性质"
+    },
+    {
+      "term": "activity cliff",
+      "translation": "活动悬崖",
+      "note": "限制模型外推能力"
+    },
+    {
+      "term": "oxidative addition",
+      "translation": "氧化加成",
+      "note": "机理假说中的关键副反应步骤"
+    }
+  ]
+}
