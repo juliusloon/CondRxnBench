@@ -1,7 +1,9 @@
 # CondRxnBench
 
-Reproducible construction and evaluation code for **CondRxnBench**, starting
-with the Ahneman–Doyle Buchwald–Hartwig HTE screen.
+English | [中文](README_CN.md)
+
+Reproducible construction and evaluation code for **CondRxnBench**, currently
+covering the Ahneman–Doyle Buchwald–Hartwig and Perera Suzuki–Miyaura HTE screens.
 
 ## Current data policy
 
@@ -19,9 +21,17 @@ Controls are preserved separately rather than being silently discarded.
 ## Reproduce
 
 ```bash
-python scripts/build_ahneman_dataset.py
-python scripts/run_baselines.py
+python3 scripts/Buchwald-Hartwig-HTE/build_dataset.py
+python3 scripts/Buchwald-Hartwig-HTE/qc_and_pairs.py
+python3 scripts/Buchwald-Hartwig-HTE/run_baselines.py
+python3 scripts/Suzuki-Miyaura-HTE/build_dataset.py
+python3 scripts/Suzuki-Miyaura-HTE/qc_and_pairs.py
 ```
 
 `run_baselines.py` requires the packages in `requirements.txt`. See
 `reports/environment_gap.md` when those packages are not available.
+
+The Perera workflow reads the vendored `Data File S1` workbook and supporting
+materials PDF only. It retains explicit blank ligand/base settings and observed
+zero outcomes, then enumerates all `n_changed_factors = 1` condition pairs
+before any cliff threshold is chosen.

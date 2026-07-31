@@ -1,0 +1,12 @@
+{
+  "records": 5760,
+  "reaction_groups": 15,
+  "observed_yields": 5760,
+  "zero_yields": 275,
+  "pair_counts": {
+    "ligand": 31680,
+    "base": 20160,
+    "solvent_1": 8640
+  },
+  "total_single_factor_pairs": 60480
+}

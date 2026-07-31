@@ -1,0 +1,28 @@
+{
+  "source_dataset": "perera_suzuki_miyaura_2018",
+  "input_policy": "Data File S1 is the sole tabular input; the supporting PDF supplies only cited constant experimental metadata.",
+  "files": [
+    {
+      "path": "/Users/juliusloon/Documents/Files/data/CondRxnBench/data/raw/perera_suzuki_miyaura/aap9112_Data_File_S1.xlsx",
+      "sha256": "a869e020ba31bd5676c67a4791c3b7384711b5216de6af444b8cd0a24c284640"
+    },
+    {
+      "path": "/Users/juliusloon/Documents/Files/data/CondRxnBench/data/raw/perera_suzuki_miyaura/aap9112_perera_sm.pdf",
+      "sha256": "54e505db0b1e7200552dae79dfff5398d1d2cbae08fcbfe472239aaa86c81b30"
+    }
+  ],
+  "source_sheet": "Sheet1",
+  "source_rows": 5760,
+  "source_columns": 16,
+  "reaction_groups": 15,
+  "factorial_design": "15 substrate pairs x 12 ligand settings (including blank) x 8 base settings (including blank) x 4 carrier solvents",
+  "solvent_normalization": {
+    "MeOH/H2O_V2 9:1": "MeOH",
+    "THF_V2": "THF"
+  },
+  "pdf_evidence": {
+    "table_s1": "S11",
+    "experiment_2": "S23-S24"
+  },
+  "output": "/Users/juliusloon/Documents/Files/data/CondRxnBench/data/processed/perera_suzuki_miyaura_main_matrix.csv"
+}

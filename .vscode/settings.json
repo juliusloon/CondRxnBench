@@ -1,0 +1,6 @@
+{
+    "pendant.autoGenerateSessionNames": true,
+    "pendant.context.autoAttach": false,
+    "pendant.notifications.agentFinished": true,
+    "pendant.contextWindowAlignment": "right"
+}
