@@ -1,0 +1,17 @@
+{
+  "manifest_schema_version": "1.0",
+  "manifest_status": "accepted_after_independent_review_2026-07-31",
+  "source_dataset": "perera_suzuki_miyaura_2018",
+  "purpose": "Immutable input baseline for the Core v0.2 reconstruction path; this new relative-path manifest does not restore or overwrite the existing deleted data/raw_metadata manifest.",
+  "source_repository": "https://github.com/rxn4chemistry/rxn_yields",
+  "source_commit": "d9e6b87ce1b881978490d68bfc00021e3b48127a",
+  "input_policy": "Data File S1 is the only tabular input; the supporting PDF provides only explicitly cited constant experimental metadata.",
+  "independent_review_report": "reports/execution/phase0_candidate_manifest_review_2026-07-31.md",
+  "files": [
+    {"path": "data/raw/perera_suzuki_miyaura/aap9112_Data_File_S1.xlsx", "sha256": "a869e020ba31bd5676c67a4791c3b7384711b5216de6af444b8cd0a24c284640"},
+    {"path": "data/raw/perera_suzuki_miyaura/aap9112_perera_sm.pdf", "sha256": "54e505db0b1e7200552dae79dfff5398d1d2cbae08fcbfe472239aaa86c81b30"}
+  ],
+  "source_sheet": "Sheet1",
+  "expected_source_rows": 5760,
+  "expected_source_columns": 16
+}

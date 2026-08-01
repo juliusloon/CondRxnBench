@@ -1,0 +1,10 @@
+{
+  "contract_sha256": "12700b5f47825c435c33c0f6fbb8fb7a4b291e92a32d2db3956a7290fa416fca",
+  "control_rows": 3,
+  "feature_config_sha256": "42bbd4e8011ac3ba3713e104585749ccd070f55457ac49210a47c6bafb9f225c",
+  "prediction_rows": 7785,
+  "run_rows": 9,
+  "split_manifest_sha256": "d2b2dae8ef5c3649667c3629cf18ac428590921ce5cf8f6937cc2bc328aaed2f",
+  "status": "candidate_not_promoted",
+  "winner_manifest_sha256": "5aa64e3858b0314a3048c592f392e1fe2bfb0a27b1063ac6823b85228701ce66"
+}

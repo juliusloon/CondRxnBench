@@ -1,0 +1,13 @@
+split_version,source_dataset,split,record_train,record_val,record_test,record_excluded,same_partition_pairs,excluded_pairs,selection_roles,selection_reason
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,ahneman_doyle_buchwald_hartwig_2018,S0,2892,619,621,0,29705,25971,[],S0_hash_rank_reaction_id
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,ahneman_doyle_buchwald_hartwig_2018,S1,2902,630,600,0,29778,25898,[],S1_hash_rank_reaction_id_within_strict_group
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,ahneman_doyle_buchwald_hartwig_2018,S2,2753,552,827,0,55676,0,[],S2_hash_rank_strict_reaction_group_id
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,ahneman_doyle_buchwald_hartwig_2018,S3,2874,538,720,0,33438,22238,"[""additive""]",S3_hash_rank_component_ref_role=additive
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,ahneman_doyle_buchwald_hartwig_2018,S4,2891,611,630,0,29457,26219,"[""catalyst_system"",""base"",""additive""]",S4_hash_rank_canonical_condition_tuple
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,ahneman_doyle_buchwald_hartwig_2018,S5,1926,82,126,1998,18420,37256,"[""catalyst_system"",""base"",""additive""]",S5_hash_rank_group_and_canonical_condition_tuple
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,perera_suzuki_miyaura_2018,S0,4031,864,865,0,32362,28118,[],S0_hash_rank_reaction_id
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,perera_suzuki_miyaura_2018,S1,4035,870,855,0,32263,28217,[],S1_hash_rank_reaction_id_within_strict_group
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,perera_suzuki_miyaura_2018,S2,3840,768,1152,0,60480,0,[],S2_hash_rank_strict_reaction_group_id
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,perera_suzuki_miyaura_2018,S3,3600,720,1440,0,48240,12240,"[""base""]",S3_hash_rank_component_ref_role=base
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,perera_suzuki_miyaura_2018,S4,4078,816,866,0,33067,27413,"[""ligand"",""base"",""solvent_1""]",S4_hash_rank_canonical_condition_tuple
+CondRxnBench-Benchmark-v0.1-splits-candidate.1,perera_suzuki_miyaura_2018,S5,2720,114,174,2752,20759,39721,"[""ligand"",""base"",""solvent_1""]",S5_hash_rank_group_and_canonical_condition_tuple

@@ -1,0 +1,97 @@
+{
+  "config_sha256": "c0763c551752dacbeba04edf542e030a0db3d751ece7d2a14e905b157e56f76b",
+  "contract_version": "CondRxnBench-Benchmark-v0.1-task-split-metrics-accepted.2",
+  "freeze": "canonical sorted IDs + output sha256; change requires new benchmark version",
+  "input_hashes": {
+    "benchmark_manifest_sha256": "79066267d1b9a827565805195d907903631a64785e1afa407339395c21c78e33",
+    "core_manifest_sha256": "101e9d5b1c29718d37f65e4b3a8dad77aa0edc415421b40bbe3b3e45ac1f05e2"
+  },
+  "release": "CondRxnBench-Benchmark-v0.1-splits-candidate.1",
+  "seed": 20260731,
+  "status": "candidate_not_promoted",
+  "tables": {
+    "pair_exclusion_ledger": {
+      "columns": [
+        "split_version",
+        "source_dataset",
+        "split",
+        "pair_id",
+        "partition_a",
+        "partition_b",
+        "exclusion_reason"
+      ],
+      "csv_sha256": "d88fd9879c55995783af4c8a902a0f9318319ed7e65170a55e4936400cbba5e4",
+      "parquet_sha256": "fe82f660a02e505e06ce057d5139919e33e842c2b7e542cd2cdb39053140a140",
+      "rows": 273291
+    },
+    "pair_splits": {
+      "columns": [
+        "split_version",
+        "config_sha256",
+        "input_manifest_sha256",
+        "source_dataset",
+        "split",
+        "pair_id",
+        "partition",
+        "endpoint_partition_a",
+        "endpoint_partition_b"
+      ],
+      "csv_sha256": "0ea8036354a8211659d49d76a9cf31e59511971c3fa3d332c5fd4483bb70bd79",
+      "parquet_sha256": "e48dec9041dc59287f6aeca112f20a7c12b37ea437b0eb504456dbf3b9370c00",
+      "rows": 423645
+    },
+    "record_exclusion_ledger": {
+      "columns": [
+        "split_version",
+        "source_dataset",
+        "split",
+        "reaction_id",
+        "exclusion_reason"
+      ],
+      "csv_sha256": "86c30f7a0497d54579efc04229d0c3fca007a4800297b56829e59b291c184254",
+      "parquet_sha256": "fc0acfef0e6fa4f3d6b474ccfe55fe1d908a1c00f5e07575a6ebf851391ee36b",
+      "rows": 4750
+    },
+    "record_splits": {
+      "columns": [
+        "split_version",
+        "config_sha256",
+        "input_manifest_sha256",
+        "seed",
+        "source_dataset",
+        "split",
+        "reaction_id",
+        "partition",
+        "selection_key",
+        "selection_reason"
+      ],
+      "csv_sha256": "8fbcfdbe2800883c924c41ba40f1d0292f888f319b82530a5d8b852d6616d0bc",
+      "parquet_sha256": "c2f9dbc232df968f6b6724e124bd77991d270f7c7b9503b532709620ef744d7a",
+      "rows": 54602
+    },
+    "split_summary": {
+      "columns": [
+        "split_version",
+        "source_dataset",
+        "split",
+        "record_train",
+        "record_val",
+        "record_test",
+        "record_excluded",
+        "same_partition_pairs",
+        "excluded_pairs",
+        "selection_roles",
+        "selection_reason"
+      ],
+      "csv_sha256": "dcbaaa94d78c0d2a42c738c48a724cc96b171477039d3c2e0bcb8abd19a669c1",
+      "parquet_sha256": "dbc186dd267e2711d75bf9dfcb32acd310309ae401238edf871511b3e472683a",
+      "rows": 12
+    }
+  },
+  "test_first": "heldout selection uses only source, identifiers, component refs, group IDs, tuple keys, fixed seed, and config; it never reads yield values or pair labels",
+  "unimplemented_by_design": [
+    "model_predictions",
+    "metric_results",
+    "benchmark_promotion"
+  ]
+}

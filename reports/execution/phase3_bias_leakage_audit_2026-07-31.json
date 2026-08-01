@@ -1,0 +1,113 @@
+{
+  "checks": {
+    "audit_tool_controls": {
+      "control": "synthetic cross-source mutation must fail while an unmodified strict pair must pass",
+      "impact": "an audit without known controls may be vacuous",
+      "negative_valid_pair_accepted": true,
+      "positive_cross_source_detected": true,
+      "status": "tested"
+    },
+    "condition_frequency_and_covariation": {
+      "ahneman_catalyst_ligand_pairs": 4,
+      "control": "treat this as shortcut diagnostic; held-out component/combination protocol is required before modeling",
+      "impact": "condition-only correlation can overstate reaction generalization",
+      "interpretation": "condition-only shortcut assessment is descriptive only; no split/model score exists",
+      "perera_solvent_labels": [
+        "DMF",
+        "MeCN",
+        "MeOH",
+        "THF"
+      ],
+      "status": "tested"
+    },
+    "controls_isolation": {
+      "control": "controls retain a separate table and pair endpoints are checked against main records",
+      "controls": 468,
+      "impact": "controls mixed into the main matrix would contaminate outcomes",
+      "main_records": 9900,
+      "overlap_reaction_ids": 0,
+      "pairs_reference_controls": 0,
+      "status": "tested"
+    },
+    "design_position_effects": {
+      "ahneman_plate_means": {
+        "plate_1": {
+          "count": 1252,
+          "mean": 36.838528022839455
+        },
+        "plate_2": {
+          "count": 1440,
+          "mean": 24.161464767941666
+        },
+        "plate_3": {
+          "count": 1440,
+          "mean": 36.31888503478125
+        }
+      },
+      "control": "record plate/batch availability and audit their association before any split/model claim",
+      "impact": "plate effects can shortcut within-source prediction",
+      "perera_batch_levels": [
+        "not_reported"
+      ],
+      "status": "tested"
+    },
+    "identity_group_pair_leakage": {
+      "control": "builder/verifier reject cross-source, cross-group, self-loop and duplicate edges; split leakage is deferred until split manifests exist",
+      "cross_partition_leakage": "not_applicable_no_splits",
+      "duplicate_graph_edge_keys": 0,
+      "duplicate_pair_ids": 0,
+      "impact": "identity leakage invalidates pair evaluation",
+      "invalid_pairs": 0,
+      "status": "tested"
+    },
+    "measurement_separation": {
+      "control": "all future metrics and splits are source/yield-type stratified",
+      "control_main_overlap": 0,
+      "impact": "mixing source yield types invalidates absolute comparisons",
+      "source_yield_type_counts": {
+        "ahneman_doyle_buchwald_hartwig_2018::lc_uv_product_scaled_percent": 4132,
+        "perera_suzuki_miyaura_2018::lc_ms_uv_area_percent_reported": 5760
+      },
+      "status": "tested"
+    },
+    "missingness_and_zero_pattern": {
+      "by_source": {
+        "ahneman_doyle_buchwald_hartwig_2018": {
+          "observed": 4132,
+          "records": 4140,
+          "zero": 273
+        },
+        "perera_suzuki_miyaura_2018": {
+          "observed": 5760,
+          "records": 5760,
+          "zero": 275
+        }
+      },
+      "control": "retain all records and use yield_observed/zero_yield flags; pairs require observed endpoints",
+      "impact": "missing analysis and observed zero can bias eligibility",
+      "status": "tested"
+    },
+    "pair_degree_imbalance": {
+      "control": "report degree distribution and require group-aware pair reporting in the later protocol",
+      "degree_max": 27,
+      "degree_median": 21.0,
+      "degree_min": 21,
+      "impact": "high-degree nodes can dominate pair metrics",
+      "isolated_main_records": 8,
+      "status": "tested"
+    },
+    "pretraining_contamination": {
+      "control": "no pretrained model is used; any later model must declare contamination risk",
+      "impact": "public-data overlap can invalidate a clean-pretraining claim",
+      "reason": "no pretrained model is used or evaluated in this phase",
+      "status": "not_applicable"
+    },
+    "structure_scaffold_coverage": {
+      "control": "declare scaffold/template tasks not_supported rather than deriving proxies",
+      "impact": "unsupported structures cannot justify scaffold leakage claims",
+      "reason": "Benchmark v0.1 scaffold/template groups are contractually not_supported because complete verified reaction structures are absent",
+      "status": "not_testable"
+    }
+  },
+  "scope": "strict candidate only; no pretraining, split, or model result"
+}

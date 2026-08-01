@@ -1,0 +1,24 @@
+{
+  "release": "CondRxnBench-Core-v0.1",
+  "scope": "two-source HTE Core; no benchmark splits or cliff labels assigned",
+  "record_count": 9900,
+  "pair_count": 116156,
+  "source_record_counts": {
+    "ahneman_doyle_buchwald_hartwig_2018": 4140,
+    "perera_suzuki_miyaura_2018": 5760
+  },
+  "source_pair_counts": {
+    "ahneman_doyle_buchwald_hartwig_2018": 55676,
+    "perera_suzuki_miyaura_2018": 60480
+  },
+  "observed_zero_yields": {
+    "ahneman_doyle_buchwald_hartwig_2018": 273,
+    "perera_suzuki_miyaura_2018": 275
+  },
+  "files": {
+    "reaction_records.csv": "71ae9d62b48aa088ffd00238b83cbce7acd94b4c741d8192231e1d38ca3a9449",
+    "condition_pairs.csv": "c026562beb4c8af7be5e3f74fd61c076b6ade73e442a4f44f2c96e1701daf52b",
+    "condition_registry.csv": "d757048413965999a22405c4485486082f0622c3463070097a4a4d9e1e115b40"
+  },
+  "format_note": "CSV is the auditable interim deliverable; export equivalent Parquet only after pyarrow is installed in the pinned Python 3.10--3.12 environment."
+}

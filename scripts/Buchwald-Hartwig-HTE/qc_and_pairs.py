@@ -14,7 +14,10 @@ import json
 import pandas as pd
 
 # ── 路径常量 ──
-ROOT = Path(__file__).resolve().parents[1]
+# This file lives at ``scripts/Buchwald-Hartwig-HTE/``; its grandparent is
+# the repository root.  Using ``parents[1]`` incorrectly resolves to
+# ``scripts/`` and makes the documented command look for ``scripts/data``.
+ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data" / "processed" / "ahneman_buchwald_hartwig_main_matrix.csv"
 REPORT = ROOT / "reports" / "Buchwald-Hartwig-HTE" / "ahneman_qc_report.md"
 

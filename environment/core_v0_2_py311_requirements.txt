@@ -1,0 +1,13 @@
+# Candidate Phase 0 runtime for CondRxnBench-Core v0.2.
+# Resolve/install only with CPython 3.11; the resulting environment report
+# records platform-specific wheel provenance and exact command output.
+numpy==1.26.4
+pandas==2.2.3
+pyarrow==17.0.0
+scikit-learn==1.5.2
+rdkit==2024.3.6
+pandera==0.20.4
+pytest==8.3.3
+networkx==3.3
+openpyxl==3.1.5
+tabulate==0.10.0

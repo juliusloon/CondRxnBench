@@ -1,0 +1,459 @@
+{
+  "contract_version": "CondRxnBench-Benchmark-v0.1-task-split-metrics-accepted.2",
+    "status": "accepted_for_split_materialization_2026-07-31",
+    "input": {
+        "benchmark_strict_candidate": "data/processed/benchmark_v0_1",
+        "required_pair_manifest_status": "candidate_not_promoted"
+    },
+    "seed": 20260731,
+    "source_stratification": {
+        "required_for_absolute_metrics": true,
+        "cross_source_absolute_aggregation": "forbidden",
+        "yield_types": {
+            "ahneman_doyle_buchwald_hartwig_2018": "lc_uv_product_scaled_percent",
+            "perera_suzuki_miyaura_2018": "lc_ms_uv_area_percent_reported"
+        }
+    },
+    "split_policy": {
+        "partitions": [
+            "train",
+            "val",
+            "test"
+        ],
+        "target_fractions": {
+            "train": 0.7,
+            "val": 0.15,
+            "test": 0.15
+        },
+        "S0": {
+            "unit": "record",
+            "purpose": "historical_random_control",
+            "status": "supported"
+        },
+        "S1": {
+            "unit": "record_within_source_design_group",
+            "purpose": "within_group_condition_interpolation",
+            "status": "supported"
+        },
+        "S2": {
+            "unit": "source_design_reaction_group",
+            "purpose": "reaction_group_OOD_not_structure_OOD",
+            "status": "supported"
+        },
+        "S3": {
+            "unit": "source_specific_condition_component",
+            "roles": {
+                "ahneman_doyle_buchwald_hartwig_2018": [
+                    "catalyst_system",
+                    "base",
+                    "additive"
+                ],
+                "perera_suzuki_miyaura_2018": [
+                    "ligand",
+                    "base",
+                    "solvent_1"
+                ]
+            },
+            "status": "supported"
+        },
+        "S4": {
+            "unit": "source_specific_condition_tuple",
+            "tuple_roles": {
+                "ahneman_doyle_buchwald_hartwig_2018": [
+                    "catalyst_system",
+                    "base",
+                    "additive"
+                ],
+                "perera_suzuki_miyaura_2018": [
+                    "ligand",
+                    "base",
+                    "solvent_1"
+                ]
+            },
+            "component_marginals_must_be_seen_in_train": true,
+            "status": "supported"
+        },
+        "S5": {
+            "unit": "source_design_group_plus_condition_tuple",
+            "tuple_roles": {
+                "ahneman_doyle_buchwald_hartwig_2018": [
+                    "catalyst_system",
+                    "base",
+                    "additive"
+                ],
+                "perera_suzuki_miyaura_2018": [
+                    "ligand",
+                    "base",
+                    "solvent_1"
+                ]
+            },
+            "status": "limited",
+            "reason": "only 15 source-design groups per source; feasibility must be checked before materializing nonempty manifests"
+        }
+    },
+    "pair_partition_policy": {
+        "pair_manifest_separate": true,
+        "include_only_same_partition_endpoints": true,
+        "cross_partition_pairs": "count_and_exclude",
+        "leakage_tolerance": 0
+    },
+    "labels": {
+        "yield": "observed_numeric_only",
+        "delta_yield": "strict_pairs",
+        "direction": {
+            "decrease": "delta<-10",
+            "invariant": "abs(delta)<=10",
+            "increase": "delta>10",
+            "exclusive": true
+        },
+        "cliff": {
+            "source": "strict_pairs.cliff_label_primary",
+            "positive": "strong"
+        },
+        "success": "not_supported_no_threshold",
+        "recommendation_hit": "top_k_contains_observed_group_optimum_not_binary_success"
+    },
+    "tasks": {
+        "Task1_absolute_yield": {
+            "input": "data/processed/core_v0_2/reaction_records.parquet + record manifest",
+            "key": "reaction_id",
+            "target": "yield_percent",
+            "eligibility": "record_class=main_matrix AND yield_observed=true",
+            "splits": [
+                "S0",
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5"
+            ],
+            "prediction": "one numeric prediction per reaction_id",
+            "metrics": [
+                "mae",
+                "rmse",
+                "r2",
+                "within_group_variance_ratio"
+            ]
+        },
+        "Task2_delta_yield": {
+            "input": "data/processed/benchmark_v0_1/strict_pairs.parquet + pair manifest",
+            "key": "pair_id",
+            "target": "delta_yield",
+            "eligibility": "same_partition_pair",
+            "splits": [
+                "S0",
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5"
+            ],
+            "prediction": "direct one numeric delta prediction per pair_id; endpoint differences are a separately declared model adapter",
+            "metrics": [
+                "delta_mae",
+                "delta_rmse",
+                "delta_pearson",
+                "delta_spearman",
+                "sensitivity_ratio",
+                "factor_wise_sensitivity"
+            ]
+        },
+        "Task3_direction": {
+            "input": "strict_pairs.parquet + pair manifest",
+            "key": "pair_id",
+            "target": "exclusive_direction from delta_yield",
+            "eligibility": "same_partition_pair",
+            "splits": [
+                "S0",
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5"
+            ],
+            "prediction": "one exclusive ternary class per pair_id",
+            "metrics": [
+                "direction_accuracy",
+                "direction_macro_f1"
+            ]
+        },
+        "Task4_cliff": {
+            "input": "strict_pairs.parquet + pair manifest",
+            "key": "pair_id",
+            "target": "cliff_label_primary == strong",
+            "eligibility": "same_partition_pair",
+            "splits": [
+                "S0",
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5"
+            ],
+            "prediction": "one calibrated score per pair_id",
+            "metrics": [
+                "cliff_auprc",
+                "cliff_auroc",
+                "cliff_f1"
+            ]
+        },
+        "Task5_ranking": {
+            "input": "reaction_records.parquet + record manifest",
+            "key": "reaction_id",
+            "target": "descending yield_percent rank within source_dataset+strict_reaction_group_id+partition",
+            "eligibility": "candidate set has >=2 observed records",
+            "splits": [
+                "S1"
+            ],
+            "prediction": "score per candidate reaction_id",
+            "ties": "average observed rank; lexical reaction_id selection tie break",
+            "metrics": [
+                "spearman",
+                "ndcg",
+                "top_k_recall"
+            ]
+        },
+        "Task6_recommendation": {
+            "input": "reaction_records.parquet + record manifest",
+            "key": "reaction_id",
+            "target": "all candidates tied at maximum observed yield_percent",
+            "eligibility": "candidate set has >=2 observed records",
+            "splits": [
+                "S1"
+            ],
+            "prediction": "ranked candidate list",
+            "ties": "all observed maxima are accepted hits; lexical reaction_id breaks predicted score ties",
+            "regret": "max_observed_yield - yield_of_first_predicted_candidate",
+            "metrics": [
+                "top_k_contains_group_optimum",
+                "regret"
+            ]
+        },
+        "Task7_OOD_framework": {
+            "input": "record_and_pair_manifests",
+            "key": "split/source/task stratum",
+            "target": "none",
+            "eligibility": "declared feasibility",
+            "splits": [
+                "S0",
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5"
+            ],
+            "prediction": "forbidden",
+            "metrics": "delegate_to_Task1_to_Task6"
+        }
+    },
+    "split_selection_contract": {
+        "candidate_order": "sha256(seed + source_dataset + selection_key), then lexical key",
+        "val_test_disjoint": true,
+        "nonempty_requirement": "each materialized partition/source must be nonempty else not_supported",
+        "infeasible_policy": "emit feasibility=not_supported with reason; never emit empty score",
+        "S0": {
+            "selection_key": "reaction_id",
+            "predicate": "ranked eligible records allocate floor(0.70*n) train, floor(0.15*n) val, remaining test; require each >=1"
+        },
+        "S1": {
+            "selection_key": "reaction_id within strict_reaction_group_id",
+            "predicate": "for every eligible group rank records; first ceil(0.70*n) train, next ceil(0.15*n) val, remainder test; require all three nonempty per group"
+        },
+        "S2": {
+            "selection_key": "strict_reaction_group_id",
+            "predicate": "ranked groups allocate disjoint groups to train/val/test; require >=1 group each"
+        },
+        "S3": {
+            "selection_key": "source_scoped condition_component_ref for exactly one declared role",
+            "role": "lexicographically first role with >=3 component entities passing frequency>=2",
+            "null_component": "eligible literal component",
+            "predicate": "heldout val/test entities disjoint; each has train frequency zero"
+        },
+        "S4": {
+            "selection_key": "canonical JSON ordered factor tuple",
+            "null_component": "eligible literal component",
+            "predicate": "heldout val/test tuples disjoint; each absent in train and each marginal component present in train"
+        },
+        "S5": {
+            "selection_key": "strict_reaction_group_id plus canonical factor tuple",
+            "predicate": "val/test group sets and tuple sets disjoint; each test/val group absent in train AND tuple absent in train; otherwise not_supported"
+        }
+    },
+    "feasibility_matrix_contract": {
+        "path": "metadata/benchmark_v0_1_task_split_feasibility_matrix.json",
+        "dimensions": [
+            "source_dataset",
+            "task",
+            "split"
+        ],
+        "required_leaf_count": 84,
+        "required_leaf_fields": [
+            "status",
+            "reason",
+            "evidence_path",
+            "minimum_eligible_records_or_pairs",
+            "nonempty_expectation",
+            "materialization_disposition"
+        ],
+        "statuses": [
+            "supported",
+            "limited",
+            "not_supported"
+        ],
+        "sources": [
+            "ahneman_doyle_buchwald_hartwig_2018",
+            "perera_suzuki_miyaura_2018"
+        ],
+        "evidence": {
+            "ahneman": "4132 observed records; 15 source-design groups; 8 missing analysis records",
+            "perera": "5760 observed records; 15 source-design groups; no structure-backed scaffold/template"
+        }
+    },
+    "manifest_contract": {
+        "record_manifest_columns": [
+            "split_version",
+            "config_sha256",
+            "input_manifest_sha256",
+            "seed",
+            "source_dataset",
+            "reaction_id",
+            "partition",
+            "selection_key",
+            "selection_reason"
+        ],
+        "pair_manifest_columns": [
+            "split_version",
+            "config_sha256",
+            "input_manifest_sha256",
+            "source_dataset",
+            "pair_id",
+            "partition",
+            "endpoint_partition_a",
+            "endpoint_partition_b"
+        ],
+        "freeze": "canonical sorted IDs + output sha256; change requires new benchmark version",
+        "evaluation_anchor": "not_used",
+        "test_first": "heldout selection uses identifiers/config only; labels forbidden"
+    },
+    "pair_exclusion_ledger_contract": {
+        "columns": [
+            "source_dataset",
+            "pair_id",
+            "partition_a",
+            "partition_b",
+            "exclusion_reason"
+        ],
+        "required_reason": "cross_partition_endpoint",
+        "cross_partition_pairs_used_for_training": 0,
+        "same_partition_train_pairs_permitted_only_for_Task2_to_Task4": true
+    },
+    "metrics": {
+        "absolute": [
+            "mae",
+            "rmse",
+            "r2",
+            "within_group_variance_ratio"
+        ],
+        "pair": [
+            "delta_mae",
+            "delta_rmse",
+            "delta_pearson",
+            "delta_spearman",
+            "direction_accuracy",
+            "direction_macro_f1",
+            "cliff_auprc",
+            "cliff_auroc",
+            "cliff_f1",
+            "sensitivity_ratio",
+            "factor_wise_sensitivity"
+        ],
+        "ranking": {
+            "ndcg_gain": "2^relevance-1",
+            "discount": "log2(rank+1)",
+            "minimum_candidates": 2
+        },
+        "recommendation": {
+            "regret": "max_observed_yield_in_candidate_set - observed_yield_of_first_predicted_candidate",
+            "top_k_contains_group_optimum": "1 iff any predicted top-k ID is an observed-max ID",
+            "empty_or_no_optimum": "not_supported_with_reason"
+        },
+        "top_k": [
+            1,
+            3,
+            5
+        ],
+        "all": {
+            "missing_prediction": "reject_input",
+            "empty": "not_supported_with_reason",
+            "ties": "average_rank; lexical reaction_id tie break for selection",
+            "group_aggregation": "macro source-stratified",
+            "toy_boundary_negative_tests_required": true
+        },
+        "r2_pearson_spearman": {
+            "minimum_n": 2,
+            "constant_truth": "not_supported_with_reason",
+            "constant_prediction": "defined_for_error_metrics; correlation_not_supported"
+        },
+        "classification": {
+            "macro_f1_labels": [
+                "decrease",
+                "invariant",
+                "increase"
+            ],
+            "absent_class": "not_supported_with_reason",
+            "cliff_positive": "strong",
+            "auprc_primary": true,
+            "auroc_requires_two_classes": true,
+            "f1_threshold": "0.5",
+            "zero_division": 0
+        },
+        "sensitivity": {
+            "sensitivity_ratio": "mean(abs(predicted_delta))/mean(abs(observed_delta))",
+            "within_group_variance_ratio": "mean_group_variance(predicted_yield)/mean_group_variance(observed_yield)",
+            "factor_wise_sensitivity": "per source+changed_factor MAE of delta_yield then macro mean",
+            "denominator_zero": "not_supported_with_reason"
+        },
+        "fixtures": {
+            "path": "tests/fixtures/metrics_v0_1_toy_cases.json",
+            "required": [
+                "empty",
+                "constant_truth",
+                "missing_prediction",
+                "direction_boundaries_-10_0_10",
+                "cliff_boundaries_10_20_30_40",
+                "single_class_cliff",
+                "ranking_tie",
+                "recommendation_multiple_optima",
+                "sensitivity_zero_denominator",
+                "numeric_metrics",
+                "direction_macro_f1",
+                "cliff_binary",
+                "ranking_ndcg_topk",
+                "recommendation_regret",
+                "factor_macro_sensitivity",
+                "variance_ratio_multi_group",
+                "pearson_spearman_distinct",
+        "direction_absent_class",
+        "top_k_recall",
+        "sensitivity_positive",
+        "pearson_constant_prediction"
+            ]
+        }
+    },
+    "negative_cases": [
+        "cross_source_absolute_aggregation_rejected",
+        "test_labels_used_for_heldout_selection_rejected",
+        "cross_partition_pair_included_rejected",
+        "group_leakage_S2_S5_rejected",
+        "heldout_component_seen_in_train_S3_rejected",
+        "heldout_combination_seen_in_train_S4_rejected",
+        "success_label_inferred_without_threshold_rejected",
+        "structure_OOD_claim_from_design_group_rejected",
+        "empty_or_single_class_metric_returns_not_supported",
+        "missing_prediction_rejected",
+        "direction_labels_overlap_rejected",
+        "S5_missing_double_OOD_predicate_rejected",
+        "manifest_hash_or_freeze_missing_rejected",
+        "metric_toy_boundary_negative_cases_required"
+    ]
+}

@@ -1,0 +1,25 @@
+{
+  "release": "CondRxnBench-Benchmark-v0.1",
+  "status": "promoted_local_release",
+  "promotion_date": "2026-07-31",
+  "scope": ["CondRxnBench-Core-v0.2", "strict_pairs_and_graphs", "S0-S5_splits", "baseline_leaderboard-v0.1"],
+  "inputs": {
+    "core_candidate_manifest": {"path": "data/processed/core_v0_2/manifest.json", "sha256": "101e9d5b1c29718d37f65e4b3a8dad77aa0edc415421b40bbe3b3e45ac1f05e2"},
+    "benchmark_candidate_manifest": {"path": "data/processed/benchmark_v0_1/manifest.json", "sha256": "79066267d1b9a827565805195d907903631a64785e1afa407339395c21c78e33"},
+    "split_candidate_manifest": {"path": "data/processed/benchmark_v0_1_splits_candidate/manifest.json", "sha256": "d2b2dae8ef5c3649667c3629cf18ac428590921ce5cf8f6937cc2bc328aaed2f"},
+    "baseline_candidate_manifest": {"path": "results/benchmark_v0_1_baselines_candidate/manifest.json", "sha256": "d20883edff10d6b3c8ac3ec1ccc2c246c793311d0662384c337681fd3d6cde88"}
+  },
+  "acceptance_evidence": [
+    "reports/execution/phase1_independent_review_iteration10_2026-07-31.md",
+    "reports/execution/phase2_independent_review_iteration12_2026-07-31.md",
+    "reports/execution/phase3_independent_review_iteration13_2026-07-31.md",
+    "reports/execution/phase4_split_independent_review_iteration25_2026-07-31.md",
+    "reports/execution/phase5_baseline_implementation_review_iteration32_2026-07-31.md",
+    "reports/execution/final_execution_summary.md"
+  ],
+  "limitations": [
+    "absolute yields are reported only within source_dataset and yield_type",
+    "reaction_only_ridge and descriptor_random_forest are explicit not_supported entries",
+    "Task5 and Task6 are supported only for S1"
+  ]
+}

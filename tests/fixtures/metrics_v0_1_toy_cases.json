@@ -1,0 +1,23 @@
+{
+  "empty": {"y_true": [], "y_pred": [], "expected": "not_supported_with_reason"},
+  "constant_truth": {"y_true": [1, 1], "y_pred": [1, 2], "expected_r2": "not_supported_with_reason"},
+  "missing_prediction": {"y_true": [1], "y_pred": [null], "expected": "reject_input"},
+  "direction_boundaries_-10_0_10": {"delta": [-10, 0, 10], "expected": ["invariant", "invariant", "invariant"]},
+  "cliff_boundaries_10_20_30_40": {"abs_delta": [10, 20, 30, 40], "primary": ["invariant", "moderate", "strong", "strong"], "strong_20": [false, true, true, true], "strong_40": [false, false, false, true]},
+  "single_class_cliff": {"y_true": [0, 0], "expected_auprc": "not_supported_with_reason", "expected_auroc": "not_supported_with_reason", "expected_f1": "not_supported_with_reason"},
+  "ranking_tie": {"reaction_id": ["R1", "R2"], "observed": [1, 1], "expected_rank": [1.5, 1.5]},
+  "recommendation_multiple_optima": {"reaction_id": ["R1", "R2"], "observed": [5, 5], "predicted_ids": ["R2"], "k": 1, "expected": 1.0},
+  "sensitivity_zero_denominator": {"observed_delta": [0, 0], "predicted_delta": [1, 1], "expected": "not_supported_with_reason"}
+  ,"sensitivity_positive": {"observed_delta": [2, -4], "predicted_delta": [1, -2], "expected": 0.5}
+  ,"numeric_metrics": {"y_true": [1, 3], "y_pred": [2, 1], "mae": 1.5, "rmse": 1.5811388300841898, "r2": -1.5, "pearson": -1.0, "spearman": -1.0}
+  ,"direction_macro_f1": {"true": ["decrease", "invariant", "increase"], "pred": ["decrease", "increase", "increase"], "accuracy": 0.6666666666666666, "macro_f1": 0.5555555555555555}
+  ,"cliff_binary": {"true": [0, 1, 0, 1], "score": [0.1, 0.9, 0.2, 0.8], "auprc": 1.0, "auroc": 1.0, "f1": 1.0}
+  ,"ranking_ndcg_topk": {"truth": [3, 2, 1], "score": [0.9, 0.8, 0.1], "ndcg": 1.0, "top_k_recall": 1.0}
+  ,"recommendation_regret": {"observed": [5, 2], "predicted_order": [1, 0], "regret": 3, "top_1_hit": 0}
+  ,"factor_macro_sensitivity": {"observed": [[2], [-4]], "predicted": [[1], [-2]], "maes": [1.0, 2.0], "macro": 1.5}
+  ,"variance_ratio_multi_group": {"observed": [[1, 3], [2, 6]], "predicted": [[1, 2], [2, 4]], "ratio": 0.25}
+  ,"pearson_spearman_distinct": {"truth": [1, 2, 3, 4], "pred": [1, 1, 4, 3], "pearson": 0.7745966692414834, "spearman": 0.7378647873726218}
+  ,"direction_absent_class": {"true": ["decrease", "increase"], "pred": ["decrease", "increase"], "expected": "not_supported_with_reason"}
+  ,"top_k_recall": {"truth_optimum_ids": ["R1"], "predicted_ids": ["R2", "R1"], "k": 1, "expected": 0.0}
+  ,"pearson_constant_prediction": {"truth": [1, 2], "pred": [1, 1], "expected": "not_supported_with_reason"}
+}

@@ -3,5 +3,15 @@
 __pycache__/
 *.pyc
 *.parquet
-docs/
+# Keep the project-maintained entry documents versioned while leaving locally
+# collected literature/source copies in docs/ out of Git.
+docs/*
+!docs/README.md
+!docs/architecture.md
+!docs/api.md
+!docs/maintenance-workflow.md
 notebooks/
+
+# Large derived CSV artifacts; regenerate from the corresponding scripts.
+data/processed/core_v0_2/record_structure_assertions.csv
+data/processed/benchmark_v0_1_splits_candidate/pair_splits.csv

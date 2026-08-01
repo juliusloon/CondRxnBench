@@ -1,0 +1,63 @@
+{
+  "contract_version": "CondRxnBench-Core-v0.2-proposed.3",
+  "status": "accepted_for_candidate_build_2026-07-31",
+  "inherits": "CondRxnBench-Core-v0.1",
+  "release_layout": {"new_output_directory": "data/processed/core_v0_2", "v0_1_immutable": true, "raw_immutable": true},
+  "storage": {
+    "authoritative": "parquet", "inspection_mirror": "csv", "arrow_schema_fingerprint_required": true,
+    "csv_semantic_tokens": ["NA", "not_reported", "NULL_COMPONENT"],
+    "csv_reader_rule": "disable automatic NA conversion; decode explicit *_value_state columns and canonical JSON before analysis",
+    "logical_types": {"id": "utf8_non_null", "semantic_token": "utf8_non_null", "flag": "bool_non_null", "numeric_evidence": "float64_nullable", "timestamp": "utc_iso8601", "list_or_map": "arrow_list_or_map__canonical_sorted_json_csv"},
+    "equivalence_checks": ["schema_fingerprint", "column_order", "primary_keys_and_order", "row_counts", "booleans", "numeric_values", "arrow_null_and_value_state", "literal_token_counts", "canonical_json", "measurement_semantics"]
+  },
+  "closed_domains": {
+    "component_value_state": ["explicit_component", "explicit_null_component", "not_reported", "NA"],
+    "outcome_observation_status": ["observed_numeric", "missing_analysis", "not_detected", "not_reported", "not_assessed"],
+    "parse_sanitize_status": ["success", "not_attempted", "not_supported", "failed"],
+    "structure_evidence_status": ["source_reported", "evidence_backed_curated", "not_reported", "rejected"],
+    "feature_status": ["available", "not_supported", "failed"],
+    "review_status": ["accepted", "pending", "rejected", "not_required"],
+    "attribute_provenance": ["evidence_backed", "derived"],
+    "eligibility_status": ["eligible", "ineligible", "not_assessed"],
+    "continuous_value_state": ["observed_numeric", "NA", "not_reported"]
+  },
+  "sentinel_contract": {
+    "NULL_COMPONENT": "literal explicit condition level; never Arrow null, NA, or not_reported",
+    "not_reported": "literal source/evidence absence; never registry entity or component reference",
+    "NA": "typed missing_or_not_applicable only; Arrow null plus explicit value_state, serialized as literal CSV token NA",
+    "observed_zero": "yield_observed=true; zero_yield=true; yield_percent=0; outcome_observation_status=observed_numeric",
+    "not_detected": "only direct source evidence; never inferred from numeric zero"
+  },
+  "structure_standardization_policy": {
+    "policy_version": "core_v0_2_proposed_2", "toolkit": {"name": "RDKit", "version": "2024.03.6"},
+    "default": "conservative_no_identity_change", "salt_parent_selection": "forbidden_without_source_backed_configured_rule",
+    "metal_complex_handling": "retain_raw__normalized_not_supported", "ion_pair_handling": "retain_raw__normalized_not_supported",
+    "r_group_marker_handling": "not_supported__no_canonicalization", "canonicalization": "RDKit_canonical_isomeric_smiles_only_after_successful_sanitize",
+    "failure_disposition": "retain_raw__record_error_class__no_feature_generation"
+  },
+  "source_boundaries": {
+    "ahneman_allowed_structure_roles": ["substrate_1", "ligand", "base", "additive"],
+    "ahneman_not_supported_structure_roles": ["catalyst_system", "catalyst", "substrate_2", "product", "atom_mapped_rxn", "canonical_rxn", "bond_changes"],
+    "perera_allowed_structure_roles": [],
+    "perera_not_supported_structure_roles": ["substrate_1", "substrate_2", "product", "catalyst", "ligand", "base", "solvent_1", "solvent_2", "atom_mapped_rxn", "canonical_rxn", "bond_changes"],
+    "unlisted_structure_role_policy": "default_deny__not_supported_without_source_backed_allowlist_entry",
+    "cross_source_equivalence": "forbidden_without_accepted_mapping_to_explicit_target"
+  },
+  "tables": {
+    "reaction_records": {"primary_key": ["reaction_id"], "required_extensions": ["standardization_version", "source_artifact_id", "provenance_status", "condition_component_refs", "condition_raw_values", "condition_mapping_version", "outcome_observation_status", "record_qc_status", "qc_rule_version", "eligibility_status", "eligibility_policy_version", "eligibility_reason_codes", "quality_grade_basis", "quality_grade_version"]},
+    "record_structure_assertions": {"primary_key": ["structure_assertion_id"], "unique": [["reaction_id", "structure_role", "assertion_version"]], "required": ["structure_assertion_id", "reaction_id", "structure_role", "assertion_version", "structure_raw_value", "structure_raw_format", "source_artifact_id", "source_locator", "evidence_id", "structure_evidence_status", "normalized_smiles", "canonical_smiles", "inchikey", "normalization_rule_version", "parse_sanitize_status", "error_class", "curation_disposition", "review_status", "murcko_status", "murcko_reason", "ecfp4_status", "ecfp4_reason", "ecfp6_status", "ecfp6_reason", "drfp_status", "drfp_reason", "reaction_center_fp_status", "reaction_center_fp_reason"]},
+    "condition_registry": {"primary_key": ["component_id"], "required": ["component_id", "registry_version", "entity_scope", "source_dataset", "role", "raw_value", "normalized_name", "component_value_state", "structure_raw_value", "normalized_smiles", "canonical_smiles", "inchikey", "structure_status", "structure_error_class", "evidence_id", "source_artifact_id", "source_locator", "review_status"]},
+    "condition_mappings": {"primary_key": ["mapping_id"], "required_for_non_identity": ["mapping_id", "mapping_version", "source_component_id", "source_scope", "target_representation", "target_scope", "mapping_kind", "non_identity", "source_raw_value", "normalized_value", "rule_id", "rule_version", "evidence_id", "source_artifact_id", "source_locator", "review_status", "reviewer_id", "review_disposition"]},
+    "condition_attributes": {"primary_key": ["attribute_id"], "required": ["attribute_id", "component_id", "attribute_name", "attribute_value", "attribute_provenance", "evidence_id", "source_artifact_id", "source_locator", "review_status"]},
+    "condition_compositions": {"primary_key": ["composition_id"], "required": ["composition_id", "reaction_id", "role", "raw_label", "component_component_id", "component_scope", "ratio_raw_value", "ratio_raw_unit", "ratio_normalized_value", "ratio_normalized_unit", "composition_rule_id", "composition_rule_version", "evidence_id", "source_artifact_id", "source_locator", "review_status"], "perera_documented_mixture": {"role": "solvent", "components": ["organic_carrier", "H2O"], "ratio_raw_value": "9:1", "ratio_raw_unit": "volume_ratio"}},
+    "continuous_observations": {"primary_key": ["continuous_observation_id"], "required": ["continuous_observation_id", "reaction_id", "field_name", "raw_value", "raw_unit", "normalized_value", "normalized_unit", "conversion_rule_id", "conversion_rule_version", "evidence_id", "source_artifact_id", "source_locator", "value_state", "review_status"], "value_state_domain": "continuous_value_state"}
+  },
+  "mapping_rules": {"non_identity_requires_accepted_review": true, "target_scope_required": true, "cross_source_mapping_requires_non_identity": true, "derived_attribute_must_not_be_presented_as_evidence": true, "record_component_reference_rule": "every reference resolves to exactly one registry entity with identical source_dataset and role"},
+  "condition_coverage_gate": {"discrete_roles": {"ahneman_doyle_buchwald_hartwig_2018": ["catalyst_system", "ligand", "base", "additive"], "perera_suzuki_miyaura_2018": ["catalyst", "ligand", "base", "solvent_1", "solvent_2", "atmosphere"]}, "state_coverage_required": 1.0, "valid_or_explicit_null_completeness_min": 0.99, "not_reported_is_valid_only_when_source_does_not_report_role": true},
+  "conservation": {
+    "record_count": 9900,
+    "source_outcomes": {"ahneman_doyle_buchwald_hartwig_2018": {"records": 4140, "observed": 4132, "missing": 8, "zero": 273}, "perera_suzuki_miyaura_2018": {"records": 5760, "observed": 5760, "missing": 0, "zero": 275}},
+    "pair_baseline": 116156, "eligibility_default": "not_assessed", "provenance_rule": "each record has source_dataset/source_record_id and direct provenance or missing_analysis_export status"
+  },
+  "validation_negative_cases": ["NULL_COMPONENT_is_not_NA_or_not_reported", "not_reported_is_not_registry_entity", "NA_is_not_component_or_observed_zero", "observed_zero_is_not_null_or_not_detected", "not_detected_requires_direct_evidence", "unaccepted_non_identity_mapping_not_usable", "cross_source_same_spelling_not_equivalent", "missing_structure_no_pseudofingerprint", "raw_numeric_null_never_implies_zero", "perera_unlisted_condition_structure_role_is_default_denied", "record_component_ref_cross_source_or_cross_role_is_rejected", "continuous_value_state_outside_closed_domain_is_rejected", "discrete_condition_state_coverage_below_100_percent_is_rejected", "valid_or_explicit_null_completeness_below_99_percent_is_rejected"]
+}

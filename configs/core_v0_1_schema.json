@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CondRxnBench-Core v0.1 canonical CSV schema",
+  "release": "CondRxnBench-Core-v0.1",
+  "scope": "The two HTE main matrices and their already enumerated strict single-factor pairs. Benchmark splits and cliff labels are intentionally not assigned in this release.",
+  "files": {
+    "reaction_records.csv": {
+      "primary_key": "reaction_id",
+      "required": ["schema_version", "source_dataset", "source_record_id", "reaction_id", "reaction_group_id", "yield_percent", "yield_observed", "zero_yield", "yield_type", "measurement_method", "quality_grade"],
+      "semantic_null": "not_reported",
+      "fields": {
+        "yield_percent": {"type": ["number", "null"], "range_when_observed": [0, 100]},
+        "yield_observed": {"type": "boolean"},
+        "zero_yield": {"type": "boolean", "rule": "true only when yield_observed is true and yield_percent equals 0"},
+        "yield_type": {"type": "string", "rule": "Never compare absolute yields across source_dataset without stratification."},
+        "success_label": {"type": "string", "allowed": ["not_assigned"], "rule": "A success threshold is a later benchmark decision."},
+        "quality_grade": {"type": "string", "allowed": ["B"]}
+      }
+    },
+    "condition_pairs.csv": {
+      "primary_key": "pair_id",
+      "required": ["schema_version", "source_dataset", "pair_id", "reaction_group_id", "reaction_id_a", "reaction_id_b", "changed_factor", "n_changed_factors", "delta_yield", "abs_delta_yield"],
+      "rules": [
+        "Both endpoints belong to the same strict reaction_group_id.",
+        "Both endpoints have observed yields.",
+        "n_changed_factors equals 1 for every Core v0.1 pair.",
+        "cliff_label is not_assigned until a pre-registered threshold policy is released."
+      ]
+    }
+  }
+}

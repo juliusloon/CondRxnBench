@@ -1,0 +1,16 @@
+{
+  "feature_version": "benchmark_v0_1_baseline_features.1",
+  "records": "data/processed/core_v0_2/reaction_records.parquet",
+  "component_source": "condition_component_refs; source-scoped component IDs only",
+  "roles": {
+    "ahneman_doyle_buchwald_hartwig_2018": ["catalyst_system", "base", "additive"],
+    "perera_suzuki_miyaura_2018": ["ligand", "base", "solvent_1"]
+  },
+  "condition_tuple": "canonical ordered JSON [[role, component_id], ...] using the source role order",
+  "categorical_encoder": {"kind": "OneHotEncoder", "fit_partition": "train_only", "handle_unknown": "ignore", "unknown_category_representation": "all-zero block", "sparse_output": false},
+  "group_feature": {"column": "strict_reaction_group_id", "fit_partition": "train_only", "S2_unseen_group": "all-zero block; lookup mean falls back to source_train_mean"},
+  "lookup_mean": {"primary_key": ["strict_reaction_group_id", "condition_tuple"], "fit_partition": "train_only", "fallback": "source_train_mean", "prediction_fallback_field": "fallback_reason"},
+  "target": {"column": "yield_percent", "unit": "source-native percent", "transform": "identity", "inverse_transform": "identity", "fit_records": "observed main_matrix only"},
+  "forbidden_columns": ["yield_percent", "measurement_value_raw", "pair labels", "product_smiles", "synthetic structure proxies"],
+  "structure_features": "not_available_for_this_contract"
+}

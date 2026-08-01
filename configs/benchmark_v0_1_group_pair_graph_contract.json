@@ -1,0 +1,84 @@
+{
+  "contract_version": "CondRxnBench-Benchmark-v0.1-proposed.1",
+  "status": "proposed_pending_independent_review",
+  "input_core": {
+    "path": "data/processed/core_v0_2",
+    "required_manifest_status": "candidate_not_promoted",
+    "raw_and_core_v0_1_immutable": true
+  },
+  "output_layout": {
+    "directory": "data/processed/benchmark_v0_1",
+    "authoritative": "parquet",
+    "csv_inspection_mirror": true,
+    "graph_exchange_format": "group_json",
+    "forbidden": ["extended_pairs", "extended_graphs", "splits", "model_results"]
+  },
+  "group_policy": {
+    "group_definition_version": "benchmark_v0_1_source_design_group_v1",
+    "design_group_id": "source_dataset + source reaction_group_id",
+    "strict_reaction_group_id": "source_dataset + source reaction_group_id",
+    "group_confidence": "source_design_defined_not_structure_verified",
+    "scaffold_group": {"value": "not_supported", "reason": "incomplete_source_structure_coverage"},
+    "template_group": {"value": "not_supported", "reason": "no_complete_verified_reaction_representation"}
+  },
+  "pair_policy": {
+    "pair_definition_version": "benchmark_v0_1_strict_discrete_v1",
+    "record_eligibility": "main_matrix + yield_observed=true",
+    "endpoint_order": "lexicographic_reaction_id",
+    "same_source_required": true,
+    "same_strict_group_required": true,
+    "self_loops_forbidden": true,
+    "n_changed_factors_required": 1,
+    "source_factor_views": {
+      "ahneman_doyle_buchwald_hartwig_2018": {
+        "catalyst_system": "reaction_records.catalyst_system",
+        "base": "reaction_records.base",
+        "additive": "reaction_records.additive"
+      },
+      "perera_suzuki_miyaura_2018": {
+        "ligand": "condition_component_refs.ligand -> same-source registry.raw_value",
+        "base": "condition_component_refs.base -> same-source registry.raw_value",
+        "solvent_1": "condition_component_refs.solvent_1 -> same-source registry.raw_value"
+      }
+    },
+    "linked_metadata": {
+      "ahneman_doyle_buchwald_hartwig_2018": {"ligand": "linked_to_catalyst_system_not_independent_pair_factor"}
+    },
+    "numeric_tolerance": {"enabled": false, "reason": "no_continuous-factor pair layer in v0.1"},
+    "universe_build_order": ["eligible_record_manifest", "full_strict_pair_universe", "universe_hash", "delta_computation", "cliff_labeling"],
+    "universe_hash": "sha256 of canonical sorted pair endpoint/factor rows before delta or label columns",
+    "v0_1_baseline_by_source_factor": {
+      "ahneman_doyle_buchwald_hartwig_2018": {"catalyst_system": 6187, "base": 4124, "additive": 45365},
+      "perera_suzuki_miyaura_2018": {"ligand": 31680, "base": 20160, "solvent_1": 8640}
+    },
+    "v0_1_regression_pair_count": 116156,
+    "reconciliation_required": true,
+    "reconciliation_ledger_columns": ["source_dataset", "changed_factor", "v0_1_baseline_count", "current_count", "endpoint_intersection_count", "v0_1_only_count", "current_only_count", "reason_code", "evidence_path"],
+    "allowed_reconciliation_reason_codes": ["identical_pair_universe", "perera_raw_solvent_identity_preserved", "accepted_bug_fix_adr"],
+    "unexplained_difference": "hard_fail"
+  },
+  "cliff_policy": {
+    "label_version": "benchmark_v0_1_cliff_v1",
+    "delta_unit": "percentage_points",
+    "primary": {"invariant_max_abs_delta": 10.0, "moderate_exclusive_min_abs_delta": 10.0, "moderate_exclusive_max_abs_delta": 30.0, "strong_min_abs_delta": 30.0},
+    "sensitivity_strong_thresholds": [{"threshold": 20.0, "operator": ">=", "column": "cliff_strong_20pp"}, {"threshold": 40.0, "operator": ">=", "column": "cliff_strong_40pp"}],
+    "required_boundary_cases_pp": [10.0, 20.0, 30.0, 40.0],
+    "required_nesting": ["cliff_strong_40pp implies cliff_strong_20pp"],
+    "noise_or_significance": "not_supported_without_replicate_evidence"
+  },
+  "graph_policy": {
+    "graph_version": "benchmark_v0_1_strict_group_json_v1",
+    "node_set": "all_main_matrix_records_in_strict_reaction_group",
+    "edge_set": "strict_pair_table_bijection",
+    "diagnostics": ["connected_components", "degree_distribution", "isolated_nodes", "edge_count_by_changed_factor"],
+    "forbidden_edges": ["self_loop", "cross_source", "cross_group", "duplicate_undirected_edge", "duplicate_pair_id"],
+    "node_columns": ["graph_id", "source_dataset", "strict_reaction_group_id", "group_definition_version", "reaction_id"],
+    "edge_columns": ["graph_id", "pair_id", "reaction_id_a", "reaction_id_b", "source_dataset", "strict_reaction_group_id", "group_definition_version", "changed_factor", "canonical_undirected_key"],
+    "canonical_undirected_key": "reaction_id_a + '::' + reaction_id_b with lexicographically ordered endpoints",
+    "group_json_required_keys": ["graph_id", "source_dataset", "strict_reaction_group_id", "group_definition_version", "graph_version", "nodes", "edges"],
+    "group_json_node_schema": ["reaction_id"],
+    "group_json_edge_schema": ["pair_id", "reaction_id_a", "reaction_id_b", "changed_factor", "canonical_undirected_key"]
+  },
+  "required_pair_columns": ["pair_id", "source_dataset", "design_group_id", "strict_reaction_group_id", "reaction_id_a", "reaction_id_b", "changed_factor", "changed_factor_vector", "n_changed_factors", "yield_a", "yield_b", "delta_yield", "abs_delta_yield", "pair_definition_version", "group_definition_version", "cliff_label_primary", "cliff_strong_20pp", "cliff_strong_40pp"],
+  "negative_cases": ["cross_source_pair_rejected", "cross_group_pair_rejected", "unobserved_outcome_pair_rejected", "self_loop_rejected", "two_changed_factors_rejected", "linked_ahneman_ligand_not_counted_as_second_factor", "pair_universe_filtered_by_delta_or_label_rejected", "cliff_boundary_cases_10_20_30_40_checked", "strong_40_without_strong_20_rejected", "duplicate_undirected_edge_rejected", "duplicate_pair_id_rejected", "graph_edge_pair_bijection_failure_rejected", "missing_graph_json_required_key_rejected", "scaffold_or_template_inference_without_complete_evidence_rejected", "threshold_change_requires_new_label_version"]
+}

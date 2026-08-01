@@ -1,0 +1,7 @@
+source_dataset,changed_factor,v0_1_baseline_count,current_count,endpoint_intersection_count,v0_1_only_count,current_only_count,reason_code,evidence_path
+ahneman_doyle_buchwald_hartwig_2018,catalyst_system,6187,6187,2063,4124,4124,accepted_bug_fix_adr,data/processed/core_v0_1/condition_pairs.csv
+ahneman_doyle_buchwald_hartwig_2018,base,4124,4124,1372,2752,2752,accepted_bug_fix_adr,data/processed/core_v0_1/condition_pairs.csv
+ahneman_doyle_buchwald_hartwig_2018,additive,45365,45365,25797,19568,19568,accepted_bug_fix_adr,data/processed/core_v0_1/condition_pairs.csv
+perera_suzuki_miyaura_2018,ligand,31680,31680,21536,10144,10144,accepted_bug_fix_adr,data/processed/core_v0_1/condition_pairs.csv
+perera_suzuki_miyaura_2018,base,20160,20160,6960,13200,13200,accepted_bug_fix_adr,data/processed/core_v0_1/condition_pairs.csv
+perera_suzuki_miyaura_2018,solvent_1,8640,8640,4032,4608,4608,perera_raw_solvent_identity_preserved,data/processed/core_v0_1/condition_pairs.csv

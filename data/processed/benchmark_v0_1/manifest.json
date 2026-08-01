@@ -1,0 +1,120 @@
+{
+  "graph_count": 30,
+  "input_core_manifest_sha256": "101e9d5b1c29718d37f65e4b3a8dad77aa0edc415421b40bbe3b3e45ac1f05e2",
+  "pair_baseline_count": 116156,
+  "release": "CondRxnBench-Benchmark-v0.1-proposed.1",
+  "status": "candidate_not_promoted",
+  "strict_pair_count": 116156,
+  "strict_pair_universe_sha256": "b10dae2adfa3e366a229f09016ce43e76217b6c80cd9d4c23b195487da7c2fe7",
+  "tables": {
+    "graph_edges": {
+      "columns": [
+        "graph_id",
+        "pair_id",
+        "reaction_id_a",
+        "reaction_id_b",
+        "source_dataset",
+        "strict_reaction_group_id",
+        "group_definition_version",
+        "changed_factor",
+        "canonical_undirected_key"
+      ],
+      "csv_sha256": "81e0e00fbfc8cae85fcb7ccdefa9e53c04b2c925a7c2d7e134a2e6f3c09349d5",
+      "parquet_sha256": "25e21ce7749c116f977d5d62bf6d127c6c36858dca8a9b3b8ade547ab3a1c671",
+      "rows": 116156
+    },
+    "graph_nodes": {
+      "columns": [
+        "graph_id",
+        "source_dataset",
+        "strict_reaction_group_id",
+        "group_definition_version",
+        "reaction_id"
+      ],
+      "csv_sha256": "53c12d7496b38bf3cc15cc2aac3812257062a0e1922917d319fbf6ff9b5d82bc",
+      "parquet_sha256": "70873e9bed8db96f3fcf2e6b239942ae4dfd229bad1a33ccb06fc475449bbbb1",
+      "rows": 9900
+    },
+    "graph_summary": {
+      "columns": [
+        "graph_id",
+        "source_dataset",
+        "strict_reaction_group_id",
+        "node_count",
+        "edge_count",
+        "connected_components",
+        "isolated_node_count",
+        "degree_min",
+        "degree_max",
+        "edge_count_by_changed_factor"
+      ],
+      "csv_sha256": "1e6b048cf992173233c4661dd164f948be832083d4d0c143db5ce66588224bff",
+      "parquet_sha256": "91ead6f8275e938c610cc94c8a167d71aee13a76dac5102df95ad602f713117d",
+      "rows": 30
+    },
+    "pair_reconciliation": {
+      "columns": [
+        "source_dataset",
+        "changed_factor",
+        "v0_1_baseline_count",
+        "current_count",
+        "endpoint_intersection_count",
+        "v0_1_only_count",
+        "current_only_count",
+        "reason_code",
+        "evidence_path"
+      ],
+      "csv_sha256": "390060c3c6516e307e8c0db6ee1aa93480683846a217ddde0948654608bd446d",
+      "parquet_sha256": "6632c6b3a9c0215fc90bd2ac98f04f9ba5dfd2c7a54c76f257f63fdeb237e59d",
+      "rows": 6
+    },
+    "record_groups": {
+      "columns": [
+        "reaction_id",
+        "source_dataset",
+        "design_group_id",
+        "strict_reaction_group_id",
+        "group_definition_version",
+        "group_confidence",
+        "scaffold_group_id",
+        "scaffold_group_reason",
+        "template_group_id",
+        "template_group_reason"
+      ],
+      "csv_sha256": "5442dbead26b8667b5cf4990adec38a1f3fb219bde1035306c00b1cb848c7676",
+      "parquet_sha256": "087dce2a7181d622892433609da808c228a93e0f541f5ced5e7e11c2e31c994d",
+      "rows": 9900
+    },
+    "strict_pairs": {
+      "columns": [
+        "pair_id",
+        "source_dataset",
+        "design_group_id",
+        "strict_reaction_group_id",
+        "reaction_id_a",
+        "reaction_id_b",
+        "changed_factor",
+        "changed_factor_vector",
+        "n_changed_factors",
+        "yield_a",
+        "yield_b",
+        "delta_yield",
+        "abs_delta_yield",
+        "pair_definition_version",
+        "group_definition_version",
+        "cliff_label_primary",
+        "cliff_strong_20pp",
+        "cliff_strong_40pp"
+      ],
+      "csv_sha256": "f7078d4bc6a6238c0582d3faf0d2244b18e28a9eb4d645365ea901f4433b58fa",
+      "parquet_sha256": "598daeaabb5b6148b798a2e530d4abeaea72ce000a6a757696b5c690eaec612f",
+      "rows": 116156
+    }
+  },
+  "unimplemented_by_design": [
+    "extended_pairs",
+    "extended_graphs",
+    "splits",
+    "model_results"
+  ]
+}
